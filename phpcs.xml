@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<ruleset name="AI Newsletter">
+	<description>WordPress Coding Standards for AI Newsletter.</description>
+
+	<file>./includes</file>
+	<file>./superdav-ai-newsletter.php</file>
+	<file>./uninstall.php</file>
+
+	<exclude-pattern>*/vendor/*</exclude-pattern>
+	<exclude-pattern>*/node_modules/*</exclude-pattern>
+
+	<arg name="extensions" value="php"/>
+	<arg name="colors"/>
+	<arg value="sp"/>
+
+	<rule ref="WordPress">
+		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
+		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
+		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+	</rule>
+
+	<rule ref="PHPCompatibilityWP"/>
+
+	<config name="testVersion" value="8.2-"/>
+	<config name="minimum_supported_wp_version" value="7.0"/>
+
+	<rule ref="WordPress.WP.I18n">
+		<properties>
+			<property name="text_domain" type="array">
+				<element value="superdav-ai-newsletter"/>
+			</property>
+		</properties>
+	</rule>
+</ruleset>

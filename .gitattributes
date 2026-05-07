@@ -1,0 +1,15 @@
+# Files / directories to exclude from the wp.org SVN deploy and `composer archive`.
+/.gitattributes export-ignore
+/.gitignore export-ignore
+/.github export-ignore
+/.idea export-ignore
+/.vscode export-ignore
+/tests export-ignore
+/phpcs.xml export-ignore
+/phpunit.xml.dist export-ignore
+/composer.lock export-ignore
+/AGENTS.md export-ignore
+/CHANGELOG.md export-ignore
+/CONTRIBUTING.md export-ignore
+/.gitignore export-ignore
+/.gitattributes export-ignore

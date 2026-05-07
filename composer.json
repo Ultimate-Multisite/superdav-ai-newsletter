@@ -1,0 +1,52 @@
+{
+	"name": "ultimate-multisite/superdav-ai-newsletter",
+	"description": "AI Newsletter — per-recipient and per-segment AI personalization for self-hosted WordPress newsletter plugins. Uses the WordPress 7.0+ AI Client and any configured connector.",
+	"type": "wordpress-plugin",
+	"license": "GPL-2.0-or-later",
+	"keywords": ["wordpress", "wordpress-plugin", "newsletter", "ai", "personalization", "newsletter-plugin", "fluentcrm", "groundhogg", "wp-ai-client"],
+	"authors": [
+		{
+			"name": "superdav42",
+			"homepage": "https://github.com/superdav42"
+		},
+		{
+			"name": "Ultimate Multisite Community",
+			"homepage": "https://ultimatemultisite.com"
+		}
+	],
+	"require": {
+		"php": ">=8.2"
+	},
+	"require-dev": {
+		"dealerdirect/phpcodesniffer-composer-installer": "^1.0",
+		"php-stubs/wordpress-stubs": "^6.0",
+		"phpcompatibility/phpcompatibility-wp": "^2.1",
+		"squizlabs/php_codesniffer": "^3.7",
+		"wp-coding-standards/wpcs": "^3.0"
+	},
+	"autoload": {
+		"psr-4": {
+			"SdAiNewsletter\\": "includes/"
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true
+		},
+		"platform": {
+			"php": "8.2.0"
+		},
+		"preferred-install": "dist",
+		"sort-packages": true
+	},
+	"scripts": {
+		"phpcs": "vendor/bin/phpcs",
+		"phpcbf": "vendor/bin/phpcbf",
+		"lint": "@phpcs"
+	},
+	"homepage": "https://github.com/Ultimate-Multisite/superdav-ai-newsletter",
+	"support": {
+		"issues": "https://github.com/Ultimate-Multisite/superdav-ai-newsletter/issues",
+		"source": "https://github.com/Ultimate-Multisite/superdav-ai-newsletter"
+	}
+}
