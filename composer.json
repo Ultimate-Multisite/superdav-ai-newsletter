@@ -29,6 +29,27 @@
 			"SdAiNewsletter\\": "includes/"
 		}
 	},
+	"archive": {
+		"exclude": [
+			"/.agents",
+			"/.aidevops.json",
+			"/.beads",
+			"/.windsurf",
+			"/.github",
+			"/.gitattributes",
+			"/.gitignore",
+			"/.idea",
+			"/.vscode",
+			"/AGENTS.md",
+			"/CHANGELOG.md",
+			"/TODO.md",
+			"/todo",
+			"/phpcs.xml",
+			"/.phpunit.result.cache",
+			"composer.lock",
+			"*.zip"
+		]
+	},
 	"config": {
 		"allow-plugins": {
 			"dealerdirect/phpcodesniffer-composer-installer": true
