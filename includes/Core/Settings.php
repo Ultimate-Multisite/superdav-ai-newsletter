@@ -54,7 +54,7 @@ final class Settings {
 	 * @return array<string, mixed>
 	 */
 	public static function defaults(): array {
-		return array(
+		return [
 			'enabled'                => false,
 			'mode'                   => self::MODE_OFF,
 			'model'                  => '',
@@ -65,19 +65,19 @@ final class Settings {
 			'fallback_on_error'      => true,
 			'personalize_subject'    => true,
 			'personalize_body'       => true,
-			'allowed_placeholders'   => array(
+			'allowed_placeholders'   => [
 				'first_name',
 				'last_name',
 				'email',
 				'country',
 				'language',
 				'days_since_signup',
-			),
-			'segment_keys'           => array(
+			],
+			'segment_keys'           => [
 				'country',
 				'language',
-			),
-		);
+			],
+		];
 	}
 
 	/**
@@ -87,9 +87,9 @@ final class Settings {
 	 */
 	public function all(): array {
 		if ( null === $this->cache ) {
-			$stored      = get_option( self::OPTION_NAME, array() );
+			$stored      = get_option( self::OPTION_NAME, [] );
 			$this->cache = wp_parse_args(
-				is_array( $stored ) ? $stored : array(),
+				is_array( $stored ) ? $stored : [],
 				self::defaults(),
 			);
 		}
@@ -140,7 +140,7 @@ final class Settings {
 		$mode = (string) $this->get( 'mode', self::MODE_OFF );
 		return in_array(
 			$mode,
-			array( self::MODE_PER_RECIPIENT, self::MODE_PER_SEGMENT, self::MODE_HYBRID, self::MODE_OFF ),
+			[ self::MODE_PER_RECIPIENT, self::MODE_PER_SEGMENT, self::MODE_HYBRID, self::MODE_OFF ],
 			true,
 		) ? $mode : self::MODE_OFF;
 	}

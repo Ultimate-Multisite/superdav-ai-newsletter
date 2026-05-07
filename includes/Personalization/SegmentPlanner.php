@@ -43,7 +43,7 @@ final class SegmentPlanner {
 	 *
 	 * @var array<int, string>
 	 */
-	public const DEFAULT_SEGMENT_KEYS = array( 'country', 'language' );
+	public const DEFAULT_SEGMENT_KEYS = [ 'country', 'language' ];
 
 	/**
 	 * Hybrid-decision cache key suffix. Stored alongside personalization
@@ -303,7 +303,7 @@ final class SegmentPlanner {
 	 */
 	public function segment_id_for( array $placeholders ): string {
 		$keys  = $this->configured_segment_keys();
-		$parts = array();
+		$parts = [];
 		foreach ( $keys as $key ) {
 			$value   = isset( $placeholders[ $key ] ) ? (string) $placeholders[ $key ] : '';
 			$value   = strtolower( trim( $value ) );
@@ -323,7 +323,7 @@ final class SegmentPlanner {
 	 */
 	private function segment_placeholders( array $placeholders ): array {
 		$segment_keys = $this->configured_segment_keys();
-		$out          = array();
+		$out          = [];
 		foreach ( $placeholders as $key => $value ) {
 			if ( in_array( $key, $segment_keys, true ) ) {
 				$out[ $key ] = $value;
@@ -357,7 +357,7 @@ final class SegmentPlanner {
 	 */
 	private function configured_segment_keys(): array {
 		$keys = $this->settings->get( 'segment_keys', self::DEFAULT_SEGMENT_KEYS );
-		if ( ! is_array( $keys ) || array() === $keys ) {
+		if ( ! is_array( $keys ) || [] === $keys ) {
 			$keys = self::DEFAULT_SEGMENT_KEYS;
 		}
 		$keys = array_values( array_filter( array_map( 'strval', $keys ) ) );

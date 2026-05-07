@@ -58,8 +58,8 @@ if ( file_exists( SD_AI_NEWSLETTER_DIR . '/vendor/autoload.php' ) ) {
 use SdAiNewsletter\Core\Plugin;
 
 // Activation / deactivation hooks fire before plugins_loaded.
-register_activation_hook( __FILE__, array( Plugin::class, 'activate' ) );
-register_deactivation_hook( __FILE__, array( Plugin::class, 'deactivate' ) );
+register_activation_hook( __FILE__, [ Plugin::class, 'activate' ] );
+register_deactivation_hook( __FILE__, [ Plugin::class, 'deactivate' ] );
 
 // Boot.
-add_action( 'plugins_loaded', array( Plugin::class, 'boot' ), 5 );
+add_action( 'plugins_loaded', [ Plugin::class, 'boot' ], 5 );

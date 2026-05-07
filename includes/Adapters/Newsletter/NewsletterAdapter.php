@@ -105,7 +105,7 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 		// Plain-text body.
 		add_filter(
 			'newsletter_message_text',
-			array( $this, 'filter_message_text' ),
+			[ $this, 'filter_message_text' ],
 			20,
 			3,
 		);
@@ -113,7 +113,7 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 		// Final message (subject + HTML body + headers).
 		add_filter(
 			'newsletter_message',
-			array( $this, 'filter_message' ),
+			[ $this, 'filter_message' ],
 			20,
 			3,
 		);
@@ -235,7 +235,7 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 			$days_since_signup = (string) max( 0, (int) floor( ( time() - $created_ts ) / DAY_IN_SECONDS ) );
 		}
 
-		$placeholders = array(
+		$placeholders = [
 			'first_name'        => $first_name,
 			'last_name'         => $last_name,
 			'email'             => $email_addr,
@@ -244,7 +244,7 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 			'days_since_signup' => $days_since_signup,
 			'campaign_subject'  => (string) ( $email->subject ?? '' ),
 			'campaign_id'       => (string) ( $email->id ?? '' ),
-		);
+		];
 
 		/**
 		 * Filter the placeholder map for a Newsletter recipient.
@@ -282,7 +282,7 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 		$mode = $this->settings->mode();
 		if ( ! in_array(
 			$mode,
-			array( Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ),
+			[ Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ],
 			true,
 		) ) {
 			return false;
