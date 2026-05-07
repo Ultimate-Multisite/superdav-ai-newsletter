@@ -21,9 +21,9 @@ final class PromptRenderer {
 	/**
 	 * Render the prompt template by substituting placeholders.
 	 *
-	 * @param string                       $template Template string with `{{key}}` placeholders.
-	 * @param array<string, scalar|null>   $values   Placeholder values.
-	 * @param string                       $body     The original email body to be substituted for `{{body}}`.
+	 * @param string                     $template Template string with `{{key}}` placeholders.
+	 * @param array<string, scalar|null> $values   Placeholder values.
+	 * @param string                     $body     The original email body to be substituted for `{{body}}`.
 	 * @return string Rendered prompt.
 	 */
 	public function render( string $template, array $values, string $body ): string {

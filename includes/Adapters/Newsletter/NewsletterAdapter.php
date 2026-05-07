@@ -56,8 +56,8 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 	/**
 	 * Constructor.
 	 *
-	 * @param Settings  $settings  Settings repository.
-	 * @param AiClient  $ai_client AI Client wrapper.
+	 * @param Settings $settings  Settings repository.
+	 * @param AiClient $ai_client AI Client wrapper.
 	 */
 	public function __construct( Settings $settings, AiClient $ai_client ) {
 		$this->settings     = $settings;
@@ -216,6 +216,10 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 
 	/**
 	 * {@inheritDoc}
+	 *
+	 * @param object $user  Newsletter subscriber row.
+	 * @param object $email Newsletter campaign row.
+	 * @return array<string, scalar|null>
 	 */
 	public function build_placeholders( object $user, object $email ): array {
 		$first_name = (string) ( $user->name ?? '' );
@@ -272,10 +276,15 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 			return false;
 		}
 
-		// v0.1 honours only per-recipient and hybrid modes through this hook surface.
-		// Per-segment mode is reserved for a future segment-builder pass.
+		// v0.2 honours per-recipient, per-segment, and hybrid modes through
+		// the per-recipient hook surface — the Personalizer branches on mode
+		// internally and reuses cached segment bodies across recipients.
 		$mode = $this->settings->mode();
-		if ( ! in_array( $mode, [ Settings::MODE_PER_RECIPIENT, Settings::MODE_HYBRID ], true ) ) {
+		if ( ! in_array(
+			$mode,
+			[ Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ],
+			true,
+		) ) {
 			return false;
 		}
 

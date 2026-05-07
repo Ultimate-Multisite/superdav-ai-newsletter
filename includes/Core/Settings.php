@@ -55,23 +55,27 @@ final class Settings {
 	 */
 	public static function defaults(): array {
 		return [
-			'enabled'              => false,
-			'mode'                 => self::MODE_OFF,
-			'model'                => '',
-			'system_prompt'        => self::default_system_prompt(),
+			'enabled'                => false,
+			'mode'                   => self::MODE_OFF,
+			'model'                  => '',
+			'system_prompt'          => self::default_system_prompt(),
 			'personalization_prompt' => self::default_personalization_prompt(),
-			'max_output_tokens'    => 1024,
-			'cache_enabled'        => true,
-			'fallback_on_error'    => true,
-			'personalize_subject'  => true,
-			'personalize_body'     => true,
-			'allowed_placeholders' => [
+			'max_output_tokens'      => 1024,
+			'cache_enabled'          => true,
+			'fallback_on_error'      => true,
+			'personalize_subject'    => true,
+			'personalize_body'       => true,
+			'allowed_placeholders'   => [
 				'first_name',
 				'last_name',
 				'email',
 				'country',
 				'language',
 				'days_since_signup',
+			],
+			'segment_keys'           => [
+				'country',
+				'language',
 			],
 		];
 	}
@@ -163,7 +167,7 @@ final class Settings {
 	 * @return string
 	 */
 	private static function default_system_prompt(): string {
-		return "You are an expert email personalization assistant. Your job is to subtly rewrite a marketing or transactional email so it speaks more directly to the specific recipient described in the user message. Preserve all links, calls to action, unsubscribe footers, and structural HTML. Do not invent facts about the recipient. Keep the same approximate length. Output only the rewritten email body.";
+		return 'You are an expert email personalization assistant. Your job is to subtly rewrite a marketing or transactional email so it speaks more directly to the specific recipient described in the user message. Preserve all links, calls to action, unsubscribe footers, and structural HTML. Do not invent facts about the recipient. Keep the same approximate length. Output only the rewritten email body.';
 	}
 
 	/**

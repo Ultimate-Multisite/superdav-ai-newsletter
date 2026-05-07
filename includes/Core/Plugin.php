@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace SdAiNewsletter\Core;
 
+use SdAiNewsletter\Adapters\FluentCRM\FluentCrmAdapter;
+use SdAiNewsletter\Adapters\Groundhogg\GroundhoggAdapter;
 use SdAiNewsletter\Adapters\Newsletter\NewsletterAdapter;
 use SdAiNewsletter\Admin\SettingsPage;
 
@@ -80,6 +82,18 @@ final class Plugin {
 
 		// Adapter: Newsletter (Stefano Lissa). Auto-registers only if active.
 		( new NewsletterAdapter(
+			$plugin->settings,
+			$plugin->ai_client,
+		) )->register();
+
+		// Adapter: FluentCRM. Auto-registers only if active.
+		( new FluentCrmAdapter(
+			$plugin->settings,
+			$plugin->ai_client,
+		) )->register();
+
+		// Adapter: Groundhogg. Auto-registers only if active.
+		( new GroundhoggAdapter(
 			$plugin->settings,
 			$plugin->ai_client,
 		) )->register();
