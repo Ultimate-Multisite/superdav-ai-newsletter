@@ -17,7 +17,19 @@
 		<exclude name="WordPress.Files.FileName.InvalidClassFileName"/>
 		<exclude name="WordPress.Files.FileName.NotHyphenatedLowercase"/>
 		<exclude name="Generic.Commenting.DocComment.MissingShort"/>
+
+		<!-- Prefer modern short array syntax `[]` over `array(...)`. -->
+		<exclude name="Universal.Arrays.DisallowShortArraySyntax"/>
+
+		<!-- Drop the equals-sign / double-arrow alignment noise: WPCS forces
+		     pixel-perfect alignment that fights every refactor and produces
+		     huge whitespace-only diffs. -->
+		<exclude name="WordPress.Arrays.MultipleStatementAlignment"/>
+		<exclude name="Generic.Formatting.MultipleStatementAlignment"/>
 	</rule>
+
+	<!-- Forbid long `array(...)` syntax instead. -->
+	<rule ref="Generic.Arrays.DisallowLongArraySyntax"/>
 
 	<rule ref="PHPCompatibilityWP"/>
 

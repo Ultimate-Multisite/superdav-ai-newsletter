@@ -50,8 +50,8 @@ final class SettingsPage {
 	 * @return void
 	 */
 	public function register(): void {
-		add_action( 'admin_menu', array( $this, 'add_menu' ) );
-		add_action( 'admin_init', array( $this, 'register_settings' ) );
+		add_action( 'admin_menu', [ $this, 'add_menu' ] );
+		add_action( 'admin_init', [ $this, 'register_settings' ] );
 	}
 
 	/**
@@ -65,7 +65,7 @@ final class SettingsPage {
 			__( 'AI Newsletter', 'superdav-ai-newsletter' ),
 			'manage_options',
 			self::PAGE_SLUG,
-			array( $this, 'render_page' ),
+			[ $this, 'render_page' ],
 		);
 	}
 
@@ -78,11 +78,11 @@ final class SettingsPage {
 		register_setting(
 			self::SETTINGS_GROUP,
 			Settings::OPTION_NAME,
-			array(
+			[
 				'type'              => 'array',
-				'sanitize_callback' => array( $this, 'sanitize' ),
+				'sanitize_callback' => [ $this, 'sanitize' ],
 				'default'           => Settings::defaults(),
-			),
+			],
 		);
 	}
 
@@ -106,12 +106,12 @@ final class SettingsPage {
 		$out['personalize_subject'] = ! empty( $input['personalize_subject'] );
 		$out['personalize_body']    = ! empty( $input['personalize_body'] );
 
-		$valid_modes = array(
+		$valid_modes = [
 			Settings::MODE_OFF,
 			Settings::MODE_PER_RECIPIENT,
 			Settings::MODE_PER_SEGMENT,
 			Settings::MODE_HYBRID,
-		);
+		];
 		$mode        = isset( $input['mode'] ) ? (string) $input['mode'] : Settings::MODE_OFF;
 		$out['mode'] = in_array( $mode, $valid_modes, true ) ? $mode : Settings::MODE_OFF;
 
@@ -132,7 +132,7 @@ final class SettingsPage {
 				),
 				static fn( string $k ): bool => '' !== $k,
 			);
-			$out['segment_keys'] = array() === $keys ? $defaults['segment_keys'] : array_values( $keys );
+			$out['segment_keys'] = [] === $keys ? $defaults['segment_keys'] : array_values( $keys );
 		}
 
 		return $out;
@@ -245,7 +245,7 @@ final class SettingsPage {
 								<?php
 								$segment_keys = isset( $values['segment_keys'] ) && is_array( $values['segment_keys'] )
 									? $values['segment_keys']
-									: array();
+									: [];
 								?>
 								<input type="text" id="sd-ai-newsletter-segment-keys" name="<?php echo esc_attr( Settings::OPTION_NAME ); ?>[segment_keys]" value="<?php echo esc_attr( implode( ',', $segment_keys ) ); ?>" class="regular-text" placeholder="country,language" />
 								<p class="description"><?php esc_html_e( 'Comma-separated placeholder keys used to derive a segment for each recipient (per-segment and hybrid modes only). Defaults to country,language.', 'superdav-ai-newsletter' ); ?></p>

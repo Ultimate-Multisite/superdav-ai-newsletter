@@ -119,7 +119,7 @@ final class GroundhoggAdapter implements PersonalizationProviderInterface {
 		// Email object plus four scalars/arrays that we mutate in place.
 		add_action(
 			'groundhogg/email/before_send',
-			array( $this, 'on_before_send' ),
+			[ $this, 'on_before_send' ],
 			20,
 			5,
 		);
@@ -237,7 +237,7 @@ final class GroundhoggAdapter implements PersonalizationProviderInterface {
 			$campaign_subject = (string) $email->get_subject_line();
 		}
 
-		$placeholders = array(
+		$placeholders = [
 			'first_name'        => $first_name,
 			'last_name'         => $last_name,
 			'email'             => $email_addr,
@@ -246,7 +246,7 @@ final class GroundhoggAdapter implements PersonalizationProviderInterface {
 			'days_since_signup' => $days_since_signup,
 			'campaign_subject'  => $campaign_subject,
 			'campaign_id'       => (string) $this->resolve_campaign_id( $email ),
-		);
+		];
 
 		/**
 		 * Filter the placeholder map for a Groundhogg recipient.
@@ -357,7 +357,7 @@ final class GroundhoggAdapter implements PersonalizationProviderInterface {
 		$mode = $this->settings->mode();
 		if ( ! in_array(
 			$mode,
-			array( Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ),
+			[ Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ],
 			true,
 		) ) {
 			return false;

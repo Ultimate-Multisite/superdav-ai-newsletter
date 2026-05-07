@@ -113,7 +113,7 @@ final class FluentCrmAdapter implements PersonalizationProviderInterface {
 		// Primary hook: per-recipient subject + body just before headers.
 		add_filter(
 			'fluent_crm/email_data_before_headers',
-			array( $this, 'filter_email_data_before_headers' ),
+			[ $this, 'filter_email_data_before_headers' ],
 			20,
 			3,
 		);
@@ -121,7 +121,7 @@ final class FluentCrmAdapter implements PersonalizationProviderInterface {
 		// Late-stage body filter (defence-in-depth for unusual send paths).
 		add_filter(
 			'fluentcrm_email_body_text',
-			array( $this, 'filter_email_body_text' ),
+			[ $this, 'filter_email_body_text' ],
 			20,
 			3,
 		);
@@ -277,7 +277,7 @@ final class FluentCrmAdapter implements PersonalizationProviderInterface {
 			}
 		}
 
-		$placeholders = array(
+		$placeholders = [
 			'first_name'        => $first_name,
 			'last_name'         => $last_name,
 			'email'             => $email_addr,
@@ -286,7 +286,7 @@ final class FluentCrmAdapter implements PersonalizationProviderInterface {
 			'days_since_signup' => $days_since_signup,
 			'campaign_subject'  => (string) ( $email->email_subject ?? $email->subject ?? '' ),
 			'campaign_id'       => (string) ( $email->campaign_id ?? $email->id ?? '' ),
-		);
+		];
 
 		/**
 		 * Filter the placeholder map for a FluentCRM recipient.
@@ -321,7 +321,7 @@ final class FluentCrmAdapter implements PersonalizationProviderInterface {
 		$mode = $this->settings->mode();
 		if ( ! in_array(
 			$mode,
-			array( Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ),
+			[ Settings::MODE_PER_RECIPIENT, Settings::MODE_PER_SEGMENT, Settings::MODE_HYBRID ],
 			true,
 		) ) {
 			return false;
