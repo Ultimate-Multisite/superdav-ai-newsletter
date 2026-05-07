@@ -8,3 +8,9 @@ Thumbs.db
 *.zip
 .idea/
 .vscode/
+
+# aidevops runtime artefacts (machine-specific symlinks / local DBs)
+.beads/
+.windsurf/
+.agents/commands
+.task-counter
