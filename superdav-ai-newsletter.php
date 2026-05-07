@@ -2,8 +2,8 @@
 /**
  * Plugin Name: AI Newsletter
  * Plugin URI:  https://github.com/Ultimate-Multisite/superdav-ai-newsletter
- * Description: Per-recipient and per-segment AI personalization for self-hosted WordPress newsletter plugins. Uses the WordPress 7.0+ AI Client and any configured connector. Newsletter (Stefano Lissa) supported in v0.1; FluentCRM and Groundhogg adapters planned.
- * Version:     0.1.0
+ * Description: Per-recipient and per-segment AI personalization for self-hosted WordPress newsletter plugins. Uses the WordPress 7.0+ AI Client and any configured connector. Adapters: Newsletter (Stefano Lissa), FluentCRM, Groundhogg.
+ * Version:     0.2.0
  * Author:      superdav42
  * Author URI:  https://github.com/superdav42
  * License:     GPL-2.0-or-later
@@ -22,7 +22,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SD_AI_NEWSLETTER_VERSION', '0.1.0' );
+define( 'SD_AI_NEWSLETTER_VERSION', '0.2.0' );
 define( 'SD_AI_NEWSLETTER_FILE', __FILE__ );
 define( 'SD_AI_NEWSLETTER_DIR', __DIR__ );
 define( 'SD_AI_NEWSLETTER_URL', plugin_dir_url( __FILE__ ) );
@@ -58,8 +58,8 @@ if ( file_exists( SD_AI_NEWSLETTER_DIR . '/vendor/autoload.php' ) ) {
 use SdAiNewsletter\Core\Plugin;
 
 // Activation / deactivation hooks fire before plugins_loaded.
-register_activation_hook( __FILE__, [ Plugin::class, 'activate' ] );
-register_deactivation_hook( __FILE__, [ Plugin::class, 'deactivate' ] );
+register_activation_hook( __FILE__, array( Plugin::class, 'activate' ) );
+register_deactivation_hook( __FILE__, array( Plugin::class, 'deactivate' ) );
 
 // Boot.
-add_action( 'plugins_loaded', [ Plugin::class, 'boot' ], 5 );
+add_action( 'plugins_loaded', array( Plugin::class, 'boot' ), 5 );

@@ -52,7 +52,7 @@ final class AiClient {
 	 * @param array<string, mixed> $options       Optional overrides: model, max_output_tokens.
 	 * @return string|WP_Error Generated text, or WP_Error on failure.
 	 */
-	public function generate_text( string $user_prompt, string $system_prompt = '', array $options = [] ) {
+	public function generate_text( string $user_prompt, string $system_prompt = '', array $options = array() ) {
 		if ( ! $this->is_available() ) {
 			return new WP_Error(
 				'sd_ai_newsletter_client_unavailable',
@@ -63,11 +63,11 @@ final class AiClient {
 		$model             = (string) ( $options['model'] ?? $this->settings->model() );
 		$max_output_tokens = (int) ( $options['max_output_tokens'] ?? $this->settings->get( 'max_output_tokens', 1024 ) );
 
-		$args = [
+		$args = array(
 			'prompt'            => $user_prompt,
 			'model'             => $model,
 			'max_output_tokens' => $max_output_tokens,
-		];
+		);
 
 		if ( '' !== $system_prompt ) {
 			$args['system_instruction'] = $system_prompt;

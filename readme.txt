@@ -4,7 +4,7 @@ Tags: newsletter, email, ai, personalization, wp-ai-client
 Requires at least: 7.0
 Tested up to: 7.0
 Requires PHP: 8.2
-Stable tag: 0.1.0
+Stable tag: 0.2.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -18,9 +18,9 @@ It is **not a newsletter plugin**. It runs alongside one.
 
 = Currently supported newsletter plugins =
 
-* Newsletter (by Stefano Lissa) — full per-recipient hook surface in v0.1.
-* FluentCRM — adapter planned (v0.2).
-* Groundhogg — adapter planned (v0.2).
+* Newsletter (by Stefano Lissa) — full per-recipient hook surface.
+* FluentCRM — full per-recipient hook surface (v0.2).
+* Groundhogg — full per-recipient hook surface (v0.2).
 
 = Why this exists =
 
@@ -66,6 +66,13 @@ The plugin does not touch outgoing email at all — it only modifies the body be
 No. Personalized bodies are cached per (subscriber × campaign × prompt-hash). Identical inputs hit the cache.
 
 == Changelog ==
+
+= 0.2.0 =
+* Per-segment personalization mode: groups recipients by configurable placeholder keys (default country + language) and reuses one AI rewrite per segment.
+* Hybrid personalization mode: AI decides per-segment vs per-recipient once per campaign, cached.
+* FluentCRM adapter — hooks `fluent_crm/email_data_before_headers` and `fluentcrm_email_body_text`.
+* Groundhogg adapter — hooks `groundhogg/email/before_send` (by-reference subject + content).
+* Settings: configurable `segment_keys`; admin page now shows host detection for all three plugins.
 
 = 0.1.0 =
 * Initial release.

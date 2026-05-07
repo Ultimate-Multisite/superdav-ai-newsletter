@@ -54,26 +54,30 @@ final class Settings {
 	 * @return array<string, mixed>
 	 */
 	public static function defaults(): array {
-		return [
-			'enabled'              => false,
-			'mode'                 => self::MODE_OFF,
-			'model'                => '',
-			'system_prompt'        => self::default_system_prompt(),
+		return array(
+			'enabled'                => false,
+			'mode'                   => self::MODE_OFF,
+			'model'                  => '',
+			'system_prompt'          => self::default_system_prompt(),
 			'personalization_prompt' => self::default_personalization_prompt(),
-			'max_output_tokens'    => 1024,
-			'cache_enabled'        => true,
-			'fallback_on_error'    => true,
-			'personalize_subject'  => true,
-			'personalize_body'     => true,
-			'allowed_placeholders' => [
+			'max_output_tokens'      => 1024,
+			'cache_enabled'          => true,
+			'fallback_on_error'      => true,
+			'personalize_subject'    => true,
+			'personalize_body'       => true,
+			'allowed_placeholders'   => array(
 				'first_name',
 				'last_name',
 				'email',
 				'country',
 				'language',
 				'days_since_signup',
-			],
-		];
+			),
+			'segment_keys'           => array(
+				'country',
+				'language',
+			),
+		);
 	}
 
 	/**
@@ -83,9 +87,9 @@ final class Settings {
 	 */
 	public function all(): array {
 		if ( null === $this->cache ) {
-			$stored      = get_option( self::OPTION_NAME, [] );
+			$stored      = get_option( self::OPTION_NAME, array() );
 			$this->cache = wp_parse_args(
-				is_array( $stored ) ? $stored : [],
+				is_array( $stored ) ? $stored : array(),
 				self::defaults(),
 			);
 		}
@@ -136,7 +140,7 @@ final class Settings {
 		$mode = (string) $this->get( 'mode', self::MODE_OFF );
 		return in_array(
 			$mode,
-			[ self::MODE_PER_RECIPIENT, self::MODE_PER_SEGMENT, self::MODE_HYBRID, self::MODE_OFF ],
+			array( self::MODE_PER_RECIPIENT, self::MODE_PER_SEGMENT, self::MODE_HYBRID, self::MODE_OFF ),
 			true,
 		) ? $mode : self::MODE_OFF;
 	}
@@ -163,7 +167,7 @@ final class Settings {
 	 * @return string
 	 */
 	private static function default_system_prompt(): string {
-		return "You are an expert email personalization assistant. Your job is to subtly rewrite a marketing or transactional email so it speaks more directly to the specific recipient described in the user message. Preserve all links, calls to action, unsubscribe footers, and structural HTML. Do not invent facts about the recipient. Keep the same approximate length. Output only the rewritten email body.";
+		return 'You are an expert email personalization assistant. Your job is to subtly rewrite a marketing or transactional email so it speaks more directly to the specific recipient described in the user message. Preserve all links, calls to action, unsubscribe footers, and structural HTML. Do not invent facts about the recipient. Keep the same approximate length. Output only the rewritten email body.';
 	}
 
 	/**

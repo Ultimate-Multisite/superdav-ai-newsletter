@@ -7,7 +7,7 @@
 **WordPress slug:** `superdav-ai-newsletter`
 **Display name:** AI Newsletter
 **Requires:** WordPress 7.0+, PHP 8.2+
-**Status:** v0.1 — Newsletter (Stefano Lissa) adapter complete; FluentCRM and Groundhogg adapters planned.
+**Status:** v0.2 — Newsletter (Stefano Lissa), FluentCRM, and Groundhogg adapters all shipped. Per-recipient, per-segment, and hybrid modes all functional.
 
 ---
 
@@ -38,8 +38,8 @@ For each recipient, just before the email is handed to `wp_mail()`:
 | Mode | What it does | Cost | Status |
 |------|-------------|------|--------|
 | **Per-recipient** | One AI call per subscriber. Highest impact. | $$$ | v0.1 — implemented |
-| **Per-segment** | AI rewrites once per audience segment. | $ | v0.2 — scaffolded |
-| **Hybrid** | AI looks at the audience and the prompt, decides whether to segment or per-recipient. | varies | v0.2 — scaffolded |
+| **Per-segment** | One AI call per audience segment, body cached and reused for every recipient in that segment. Default segment keys: `country`, `language` (configurable). | $ | v0.2 — implemented |
+| **Hybrid** | AI looks at the prompt and audience and decides per-segment vs per-recipient. Decision is cached per campaign. | varies | v0.2 — implemented |
 | **Off** | Passthrough. | free | v0.1 |
 
 ## Installation (development, this Bedrock site)
@@ -75,13 +75,18 @@ includes/
 ├── Contracts/
 │   └── PersonalizationProviderInterface.php  # Adapter contract
 ├── Personalization/
-│   ├── Personalizer.php        # Orchestrates render → AI → cache
+│   ├── Personalizer.php        # Mode-branching orchestrator
+│   ├── SegmentPlanner.php      # Per-segment + hybrid decisions
 │   └── PromptRenderer.php      # {{placeholder}} substitution
 ├── Cache/
 │   └── PersonalizationCache.php # subscriber × campaign × prompt-hash
 ├── Adapters/
-│   └── Newsletter/
-│       └── NewsletterAdapter.php  # Stefano Lissa Newsletter adapter
+│   ├── Newsletter/
+│   │   └── NewsletterAdapter.php  # Stefano Lissa Newsletter adapter
+│   ├── FluentCRM/
+│   │   └── FluentCrmAdapter.php   # FluentCRM adapter
+│   └── Groundhogg/
+│       └── GroundhoggAdapter.php  # Groundhogg adapter
 └── Admin/
     └── SettingsPage.php        # Settings → AI Newsletter
 ```
@@ -94,13 +99,21 @@ The plugin exposes these filters for theme / mu-plugin customization:
 
 - `sd_ai_newsletter_default_model` — override the global default model ID.
 - `sd_ai_newsletter_prompt_args` — modify the args passed to `wp_ai_client_prompt()`.
-- `sd_ai_newsletter_should_personalize` — opt out for a specific campaign.
+- `sd_ai_newsletter_should_personalize` — opt out for a specific Newsletter campaign.
+- `sd_ai_newsletter_fluentcrm_should_personalize` — opt out for a specific FluentCRM campaign.
+- `sd_ai_newsletter_groundhogg_should_personalize` — opt out for a specific Groundhogg email.
 - `sd_ai_newsletter_newsletter_placeholders` — modify the placeholder map for a Newsletter recipient.
-- `sd_ai_newsletter_personalized_body` — modify the AI-generated body before it is sent.
+- `sd_ai_newsletter_fluentcrm_placeholders` — modify the placeholder map for a FluentCRM recipient.
+- `sd_ai_newsletter_groundhogg_placeholders` — modify the placeholder map for a Groundhogg recipient.
+- `sd_ai_newsletter_personalized_body` — modify the per-recipient AI-generated body before it is sent.
+- `sd_ai_newsletter_segment_personalized_body` — modify the per-segment AI-generated body before it is sent.
+- `sd_ai_newsletter_segment_keys` — modify the placeholder keys used to derive segment IDs.
+- `sd_ai_newsletter_hybrid_should_segment` — override the AI's hybrid-mode decision.
 
-And one action:
+And these actions:
 
-- `sd_ai_newsletter_personalization_failed` — fires when AI personalization falls back to the original body.
+- `sd_ai_newsletter_personalization_failed` — fires when AI per-recipient personalization falls back to the original body.
+- `sd_ai_newsletter_segment_personalization_failed` — fires when AI per-segment personalization falls back.
 
 ## License
 
