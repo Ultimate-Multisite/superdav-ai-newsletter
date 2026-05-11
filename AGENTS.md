@@ -123,4 +123,24 @@ substitutes placeholders into a fixed admin-controlled template — but adapters
 - All settings reads go through `Core\Settings`. Do not duplicate
   `get_option()` calls across the codebase.
 
+## Operational Notes
+
+### Health dashboard staleness
+
+The aidevops supervisor health dashboard (a pinned GitHub issue in this repo)
+is updated by `stats-wrapper.sh` (runs hourly). The update skips repos with no
+active workers, open PRs, or assigned issues **and** no cached health-issue
+file. If the dashboard goes stale:
+
+1. Check the log: `tail -40 ~/.aidevops/logs/stats.log | grep superdav-ai-newsletter`
+2. Look for `skipping creation` (activity guard) or `HEALTH-DASHBOARD-FAIL` (crash).
+3. Manual refresh: run `bash ~/.aidevops/agents/scripts/stats-wrapper.sh` while
+   a worker or interactive session is active for this repo — the active session
+   provides the activity signal the guard needs to proceed.
+
+Root-cause reference: [issue #7](https://github.com/Ultimate-Multisite/superdav-ai-newsletter/issues/7)
+— API rate-limit failures on 2026-05-09 caused silent `gh_issue_list` failures
+that made the activity guard see zero activity even when issues were assigned,
+causing the dashboard to go stale for 4 days.
+
 <!-- AI-CONTEXT-END -->
