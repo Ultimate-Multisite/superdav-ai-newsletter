@@ -41,12 +41,15 @@ includes/
 ├── Contracts/
 │   └── PersonalizationProviderInterface.php  # Adapter contract
 ├── Personalization/
-│   ├── Personalizer.php        # render → AI → cache → safe fallback
-│   └── PromptRenderer.php      # {{key|fallback}} substitution
+│   ├── Personalizer.php        # render → AI → cache → safe fallback; branches on mode
+│   ├── PromptRenderer.php      # {{key|fallback}} substitution
+│   └── SegmentPlanner.php      # per-segment + hybrid modes (one AI call per segment)
 ├── Cache/
 │   └── PersonalizationCache.php # provider × campaign × subscriber × kind × prompt_hash
 ├── Adapters/
-│   └── Newsletter/             # Stefano Lissa Newsletter adapter (v0.1)
+│   ├── Newsletter/             # Stefano Lissa Newsletter adapter (reference)
+│   ├── FluentCRM/              # FluentCRM adapter (subject + HTML + text)
+│   └── Groundhogg/             # Groundhogg adapter (by-ref subject + content)
 └── Admin/
     └── SettingsPage.php        # Settings → AI Newsletter (per-site only)
 ```
@@ -85,7 +88,7 @@ includes/
 4. Inside each filter, call `Personalizer::personalize()` with the adapter's
    `id()`, the campaign and subscriber IDs, the content kind (`html` / `text` /
    `subject`), the original body, and a placeholder map.
-5. Wire the adapter into `Core\Plugin::boot()` next to `NewsletterAdapter`.
+5. Wire the adapter into `Core\Plugin::boot()` next to the existing adapters.
 
 ## Key Files
 
@@ -94,7 +97,10 @@ includes/
 | `superdav-ai-newsletter.php` | Plugin bootstrap (constants + autoloader + boot) |
 | `includes/Core/Plugin.php` | Hook registration |
 | `includes/Personalization/Personalizer.php` | The orchestrator every adapter calls |
-| `includes/Adapters/Newsletter/NewsletterAdapter.php` | Reference adapter |
+| `includes/Personalization/SegmentPlanner.php` | Per-segment and hybrid mode logic |
+| `includes/Adapters/Newsletter/NewsletterAdapter.php` | Reference adapter (Stefano Lissa Newsletter) |
+| `includes/Adapters/FluentCRM/FluentCrmAdapter.php` | FluentCRM adapter |
+| `includes/Adapters/Groundhogg/GroundhoggAdapter.php` | Groundhogg adapter |
 | `includes/Admin/SettingsPage.php` | Settings → AI Newsletter UI |
 | `composer.json` | Composer package metadata, dev deps |
 | `phpcs.xml` | WordPress Coding Standards rules |
