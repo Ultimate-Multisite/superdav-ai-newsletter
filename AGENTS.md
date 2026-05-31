@@ -149,4 +149,12 @@ Root-cause reference: [issue #7](https://github.com/Ultimate-Multisite/superdav-
 that made the activity guard see zero activity even when issues were assigned,
 causing the dashboard to go stale for 4 days.
 
+Root-cause reference: [issue #11](https://github.com/Ultimate-Multisite/superdav-ai-newsletter/issues/11)
+— the local `~/.aidevops/logs/health-issue-*-Ultimate-Multisite-superdav-ai-newsletter`
+cache file was missing, so the health-dashboard activity guard skipped the repo
+before resolving the already-pinned dashboard issue. A targeted refresh while
+issue #11 was assigned recreated the cache and updated #3. If the full wrapper
+times out before the health pass, source `stats-functions.sh` with `LOGFILE` set
+and run `_update_health_issue_for_repo "Ultimate-Multisite/superdav-ai-newsletter" "$PWD" "" "" ""`.
+
 <!-- AI-CONTEXT-END -->
