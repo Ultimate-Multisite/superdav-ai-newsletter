@@ -36,10 +36,12 @@ define( 'SD_AI_NEWSLETTER_BASENAME', plugin_basename( __FILE__ ) );
  */
 define( 'SD_AI_NEWSLETTER_DEFAULT_MODEL', 'gpt-4o-mini' );
 
-// Composer autoloader — required.
-if ( file_exists( SD_AI_NEWSLETTER_DIR . '/vendor/autoload.php' ) ) {
+// Skip plugin autoloader if a root Composer autoloader already loaded dependencies.
+if ( ! class_exists( 'SdAiNewsletter\Core\Plugin' ) && file_exists( SD_AI_NEWSLETTER_DIR . '/vendor/autoload.php' ) ) {
 	require_once SD_AI_NEWSLETTER_DIR . '/vendor/autoload.php';
-} else {
+}
+
+if ( ! class_exists( 'SdAiNewsletter\Core\Plugin' ) ) {
 	add_action(
 		'admin_notices',
 		static function (): void {
