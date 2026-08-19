@@ -2,7 +2,7 @@
 Contributors: superdav42
 Tags: newsletter, email, ai, personalization, wp-ai-client
 Requires at least: 7.0
-Tested up to: 7.0
+Tested up to: 7.1
 Requires PHP: 8.2
 Stable tag: 0.2.0
 License: GPLv2 or later
