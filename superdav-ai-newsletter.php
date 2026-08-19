@@ -9,7 +9,6 @@
  * License:     GPL-2.0-or-later
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Requires at least: 7.0
- * Tested up to: 7.1
  * Requires PHP: 8.2
  * Text Domain: superdav-ai-newsletter
  * Domain Path: /languages
