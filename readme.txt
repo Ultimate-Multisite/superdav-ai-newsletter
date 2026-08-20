@@ -4,7 +4,7 @@ Tags: newsletter, email, ai, personalization, wp-ai-client
 Requires at least: 7.0
 Tested up to: 7.1
 Requires PHP: 8.2
-Stable tag: 0.2.0
+Stable tag: 0.2.1
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -66,6 +66,10 @@ The plugin does not touch outgoing email at all — it only modifies the body be
 No. Personalized bodies are cached per (subscriber × campaign × prompt-hash). Identical inputs hit the cache.
 
 == Changelog ==
+
+= 0.2.1 =
+Version 0.2.1 - Released on 2026-08-19
+- Improved: WordPress compatibility metadata now reflects testing through WordPress 7.1.
 
 = 0.2.0 =
 * Per-segment personalization mode: groups recipients by configurable placeholder keys (default country + language) and reuses one AI rewrite per segment.
