@@ -14,6 +14,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   hashing, consent and subscriber-status rechecks, dry-run-by-default behavior,
   and an additional exact-ID confirmation gate for single-recipient delivery.
 
+### Fixed
+
+- Configure and execute the fluent prompt builder returned by WordPress 7's
+  `wp_ai_client_prompt()` instead of treating the builder as generated output.
+
 ## [0.2.0] - 2026-05-07
 
 ### Added

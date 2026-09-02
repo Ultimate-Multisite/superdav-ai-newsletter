@@ -74,7 +74,7 @@ final class AiClient {
 		}
 
 		/**
-		 * Filter the arguments passed to wp_ai_client_prompt().
+		 * Filter the arguments used to configure the WordPress AI Client builder.
 		 *
 		 * @param array<string, mixed> $args     The prompt arguments.
 		 * @param string               $user_prompt The user prompt.
@@ -83,7 +83,37 @@ final class AiClient {
 		$args = (array) apply_filters( 'sd_ai_newsletter_prompt_args', $args, $user_prompt, $system_prompt );
 
 		try {
-			$result = \wp_ai_client_prompt( $args );
+			$result = \wp_ai_client_prompt( (string) ( $args['prompt'] ?? $user_prompt ) );
+
+			// WordPress 7.0+ returns a fluent prompt builder. Configure it before
+			// calling the terminating generate_text() method.
+			if ( is_object( $result ) && is_a( $result, 'WP_AI_Client_Prompt_Builder' ) ) {
+				if ( ! empty( $args['model'] ) ) {
+					$result->using_model_preference( (string) $args['model'] );
+				}
+
+				if ( ! empty( $args['system_instruction'] ) ) {
+					$result->using_system_instruction( (string) $args['system_instruction'] );
+				}
+
+				if ( ! empty( $args['max_output_tokens'] ) ) {
+					$result->using_max_tokens( (int) $args['max_output_tokens'] );
+				}
+
+				if ( isset( $args['temperature'] ) ) {
+					$result->using_temperature( (float) $args['temperature'] );
+				}
+
+				if ( isset( $args['top_p'] ) ) {
+					$result->using_top_p( (float) $args['top_p'] );
+				}
+
+				if ( isset( $args['top_k'] ) ) {
+					$result->using_top_k( (int) $args['top_k'] );
+				}
+
+				$result = $result->generate_text();
+			}
 		} catch ( \Throwable $e ) {
 			return new WP_Error(
 				'sd_ai_newsletter_client_exception',

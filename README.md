@@ -129,7 +129,7 @@ result cannot be retried automatically.
 The plugin exposes these filters for theme / mu-plugin customization:
 
 - `sd_ai_newsletter_default_model` — override the global default model ID.
-- `sd_ai_newsletter_prompt_args` — modify the args passed to `wp_ai_client_prompt()`.
+- `sd_ai_newsletter_prompt_args` — configure the WordPress AI Client prompt builder (prompt, model preference, system instruction, token limit, temperature, top-p, or top-k).
 - `sd_ai_newsletter_should_personalize` — opt out for a specific Newsletter campaign.
 - `sd_ai_newsletter_fluentcrm_should_personalize` — opt out for a specific FluentCRM campaign.
 - `sd_ai_newsletter_groundhogg_should_personalize` — opt out for a specific Groundhogg email.
