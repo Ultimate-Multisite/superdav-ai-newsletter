@@ -268,6 +268,15 @@ final class NewsletterAdapter implements PersonalizationProviderInterface {
 	 * @return bool
 	 */
 	private function should_personalize( $email ): bool {
+		// Pilot copy is generated, reviewed, and frozen before Newsletter renders
+		// recipient-specific unsubscribe links. Never rewrite it in the send loop.
+		if ( is_object( $email )
+			&& is_array( $email->options ?? null )
+			&& ! empty( $email->options['sd_ai_check_in'] )
+		) {
+			return false;
+		}
+
 		if ( ! $this->settings->is_enabled() ) {
 			return false;
 		}

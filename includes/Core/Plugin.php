@@ -13,6 +13,9 @@ use SdAiNewsletter\Adapters\FluentCRM\FluentCrmAdapter;
 use SdAiNewsletter\Adapters\Groundhogg\GroundhoggAdapter;
 use SdAiNewsletter\Adapters\Newsletter\NewsletterAdapter;
 use SdAiNewsletter\Admin\SettingsPage;
+use SdAiNewsletter\CheckIn\CliCommand;
+use SdAiNewsletter\CheckIn\PilotRepository;
+use SdAiNewsletter\CheckIn\PilotService;
 
 /**
  * Bootstraps the plugin: settings, AI client, and adapters.
@@ -97,6 +100,12 @@ final class Plugin {
 			$plugin->settings,
 			$plugin->ai_client,
 		) )->register();
+
+		// Bounded customer check-in pilot. WP-CLI only; no web or cron send path.
+		if ( defined( 'WP_CLI' ) && WP_CLI && class_exists( '\\WP_CLI' ) ) {
+			$pilot = new PilotService( $plugin->ai_client, new PilotRepository() );
+			\WP_CLI::add_command( 'ai-newsletter check-in', new CliCommand( $pilot ) );
+		}
 	}
 
 	/**

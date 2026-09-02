@@ -93,6 +93,37 @@ includes/
 
 Adding a new newsletter-plugin adapter is a 200-line drop-in: implement `PersonalizationProviderInterface`, call `Personalizer::personalize()` from the plugin's per-recipient hooks.
 
+## Customer check-in pilot (WP-CLI)
+
+The experimental check-in workflow is deliberately limited to five selected
+Newsletter subscribers. It generates only a short introduction from an
+allowlisted snapshot returned directly by Ultimate Multisite Newsletter's
+`Customer_Snapshot_Provider`; public filters cannot manufacture consent;
+recipient email, site URLs/content, IP addresses, payment amounts, and support
+messages are never included in the model prompt. Recipient names stay local and
+are used only by the fixed subject template.
+
+```bash
+# Generate drafts only after dedicated check-in consent and its evidence have
+# been recorded by the customer-data provider.
+wp ai-newsletter check-in generate --subscriber=12,34,56
+
+wp ai-newsletter check-in list-drafts
+wp ai-newsletter check-in show <draft-id>
+wp ai-newsletter check-in approve <draft-id>
+
+# Default send command is a dry run and never delivers email.
+wp ai-newsletter check-in send <draft-id>
+```
+
+Copy is frozen with a SHA-256 hash at generation. Approval, current Newsletter
+confirmed status, consent, and the hash are rechecked before every dry run or
+delivery. Live delivery is one recipient at a time and requires both
+`--live` and `--confirm=<draft-id>`. Newsletter adds recipient-specific
+unsubscribe links and headers only after the approved body has been frozen. A
+live attempt first enters a durable `sending` state, so an ambiguous delivery
+result cannot be retried automatically.
+
 ## Filters
 
 The plugin exposes these filters for theme / mu-plugin customization:

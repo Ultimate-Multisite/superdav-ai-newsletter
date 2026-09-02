@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Added
+
+- A WP-CLI-only customer check-in pilot with a five-recipient cap, minimized
+  structured context, durable draft/approval/rejection/sent states, frozen-copy
+  hashing, consent and subscriber-status rechecks, dry-run-by-default behavior,
+  and an additional exact-ID confirmation gate for single-recipient delivery.
+
 ## [0.2.0] - 2026-05-07
 
 ### Added
