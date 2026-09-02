@@ -13,6 +13,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   structured context, durable draft/approval/rejection/sent states, frozen-copy
   hashing, consent and subscriber-status rechecks, dry-run-by-default behavior,
   and an additional exact-ID confirmation gate for single-recipient delivery.
+- A fixed, verified Ultimate Multisite year-in-review recap with AI limited to a
+  closing add-on and feature feedback question. Customer activity, membership,
+  payment, and account details are excluded from model context.
 
 ### Fixed
 

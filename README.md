@@ -96,12 +96,16 @@ Adding a new newsletter-plugin adapter is a 200-line drop-in: implement `Persona
 ## Customer check-in pilot (WP-CLI)
 
 The experimental check-in workflow is deliberately limited to five selected
-Newsletter subscribers. It generates only a short introduction from an
-allowlisted snapshot returned directly by Ultimate Multisite Newsletter's
-`Customer_Snapshot_Provider`; public filters cannot manufacture consent;
-recipient email, site URLs/content, IP addresses, payment amounts, and support
-messages are never included in the model prompt. Recipient names stay local and
-are used only by the fixed subject template.
+Newsletter subscribers. The year-in-review recap is fixed, verified product
+copy; AI generates only the short closing feedback question. Its model context
+contains fixed labels for known add-ons active directly on customer-owned sites
+and nothing else. Network-active plugins are ignored because platform
+availability does not prove customer use. The snapshot is returned directly by
+Ultimate Multisite Newsletter's `Customer_Snapshot_Provider`, so public filters
+cannot manufacture consent. Recipient email and name, URLs, site content,
+account activity, membership and payment data, IP addresses, and support
+messages are never included in the model prompt. A recipient name stays local
+and is used only by the fixed greeting.
 
 ```bash
 # Generate drafts only after dedicated check-in consent and its evidence have
